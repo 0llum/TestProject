@@ -12,37 +12,35 @@ public class CarController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log (Screen.width);
-		Debug.Log (Screen.height);
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.touchCount > 0) {
-			if (currentSpeed < maxSpeed) {
-				currentSpeed += Time.deltaTime * acceleration;
-			} else {
-				currentSpeed = maxSpeed;
-			}
+        if (Input.GetKey ("a") || Input.GetKey ("d")) {
+            if (currentSpeed < maxSpeed) {
+                currentSpeed += Time.deltaTime * acceleration;
+            } else {
+                currentSpeed = maxSpeed;
+            }
 
-			if ((Input.touchCount > 1) && ((Input.GetTouch (0).position.x > Screen.width / 2 && Input.GetTouch (1).position.x < Screen.width / 2) ||
-			    (Input.GetTouch (0).position.x < Screen.width / 2 && Input.GetTouch (1).position.x > Screen.width / 2))) {
-				transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
-			} else if (Input.GetTouch (0).position.x > Screen.width / 2) {
-				transform.Rotate (Vector3.up * -Time.deltaTime * rotationSpeed * currentSpeed);
-				transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
-			} else {
-				transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed * currentSpeed);
-				transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
-			}
-		} else {
-			if (currentSpeed > 0) {
-				currentSpeed -= Time.deltaTime * deceleration;
-			} else {
-				currentSpeed = 0;
-			}
+            if (Input.GetKey ("a") && Input.GetKey ("d")) {
+                transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
+            } else if (Input.GetKey("d")) {
+                transform.Rotate (Vector3.up * -Time.deltaTime * rotationSpeed * currentSpeed);
+                transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
+            } else if (Input.GetKey ("a")) {
+                transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed * currentSpeed);
+                transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
+            }
+        } else {
+            if (currentSpeed > 0) {
+                currentSpeed -= Time.deltaTime * deceleration;
+            } else {
+                currentSpeed = 0;
+            }
 
-			transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
-		}
+            transform.Translate (Vector3.forward * Time.deltaTime * currentSpeed);
+        }
 	}
 }
